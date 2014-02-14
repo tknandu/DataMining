@@ -1,4 +1,4 @@
 DataMining
 ==========
 
-Data Mining Course
+Data Mining Course Project
