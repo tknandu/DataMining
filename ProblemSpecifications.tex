@@ -23,7 +23,7 @@ Since real-world datasets are huge, we look at distributed divide-and-conquer ap
 
 To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to ‘divide’ the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements(vertices which belong to more than one community) can play the role of mediators between different communities. 
 
-We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to ‘merge’ the results of the ‘divide’ and ‘conquer’ phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the ‘divide’ phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the ‘importance’ of a vertex in classification of its neighbours.
+We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to ‘merge’ the results of the ‘divide’ and ‘conquer’ phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the ‘divide’ phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the ‘importance’ of a vertex in the classification of its neighbours.
 
 During the conquer phase of the algorithm , we can use the feature vectors which are associated with each vertex for classification , in addition to the underlying graph structure.
 
@@ -75,12 +75,19 @@ Then,the average $F_{\beta}$ measure is defined to be:-
 \end{equation}
 Given a predicted class, precision indicates how many vertices are actually in the same class. Given a class, recall indicates how many vertices are predicted to be in the same class as the predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision.It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e.some vertices are not annotated to be a part of a class even though they actually belong to that class.This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
 
-\section*{References}
-\begin{itemize}
-\item The SNAP dataset link
-\item Inderjit Dhillon's paper
-\item The Fortunato link 
-\item The link from where I got the 3 datasets(UMD)
 
-\end{itemize}
+\begin{thebibliography}{1}
+\bibitem{notes} Whang ,Gleich and Dhillon {\em ``Overlapping Community Detection
+Using Seed Set Expansion''} 
+
+\bibitem{impj}  The Japan Reader {\em Imperial Japan 1800-1945} 1973:
+  Random House, N.Y.
+
+\bibitem{norman} E. H. Norman {\em Japan's emergence as a modern
+  state} 1940: International Secretariat, Institute of Pacific
+  Relations.
+
+\bibitem{fo} Bob Tadashi Wakabayashi {\em Anti-Foreignism and Western
+  Learning in Early-Modern Japan} 1986: Harvard University Press.
+\end{thebibliography}
 \end{document}
