@@ -17,7 +17,7 @@ Traditionally, we have looked at classification algorithms to predict class labe
 
 
 \section*{Overview}
-We are given a directed graph G=(V,E) with vertex set V and edge set E. Each vertex has set of attributes associated with it and belongs to one of the several classes. A common way of representing this is to associate a feature vector with every vertex. The task at hand is to assign a class label to unlabelled vertices in the graph. This problem is commonly known as the Vertex Classification Problem. 
+We are given a directed graph $G=(V,E)$ with vertex set $V$ and edge set $E$. Each vertex has set of attributes associated with it and belongs to one of the several classes. A common way of representing this is to associate a feature vector with every vertex. The task at hand is to assign a class label to unlabelled vertices in the graph. This problem is commonly known as the Vertex Classification Problem. 
 
 Since real-world datasets are huge, we look at distributed divide-and-conquer approaches to classify vertices of the graph. We aim to analyse speed-vs-quality of different divide and conquer approaches and attempt to devise an approach tailored to the problem of vertex classification . 
 
@@ -64,16 +64,16 @@ F_{\beta}(S_{i}) = (1+{\beta^2}) \frac{precision(S_{i}).recall(S_{i})}{{\beta^2}
 \end{equation}
 where $\beta$ is a non-negative real value and the precision and recall of $S_i$ are defined as follows:
 \begin{equation}
-precision({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ {C_{i}} } 
+precision({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ \left|{C_{i}}\right| } 
 \end{equation} 
 \begin{equation}
-recall({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ {S_{i}} } 
+recall({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ \left| {S_{i}} \right| } 
 \end{equation} 
 Then,the average $F_{\beta}$ measure is defined to be:-
 \begin{equation}
 \bar{F_{\beta}} = \frac{\sum_{\beta}{F_{\beta}}}{ \left|{S_{i}}\right| }
 \end{equation}
-Given a predicted class, precision indicates how many vertices are actually in the same class. Given a class, recall indicates how many vertices are predicted to be in the same class in a predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision.It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e.some vertices are not annotated to be a part of a class even though they actually belong to that class.This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
+Given a predicted class, precision indicates how many vertices are actually in the same class. Given a class, recall indicates how many vertices are predicted to be in the same class as the predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision.It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e.some vertices are not annotated to be a part of a class even though they actually belong to that class.This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
 
 \section*{References}
 \begin{itemize}

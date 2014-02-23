@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.27)  24 FEB 2014 02:25
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2013.1.27)  24 FEB 2014 02:34
 entering extended mode
  %&-line parsing enabled.
 **ProblemSpecifications.tex
@@ -478,6 +478,10 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 14.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 14.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 20.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 20.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
@@ -488,10 +492,6 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 40.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 61.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 61.
  [2] [3]
 (./ProblemSpecifications.aux) ) 
 Here is how much of TeX's memory you used:
@@ -511,7 +511,7 @@ exmf-texlive/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texmf-texlive
 /public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public/amsf
 onts/cm/cmr7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy1
 0.pfb>
-Output written on ProblemSpecifications.pdf (3 pages, 121680 bytes).
+Output written on ProblemSpecifications.pdf (3 pages, 122645 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  16 named destinations out of 1000 (max. 500000)
