@@ -1,0 +1,84 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks]{hyperref}
+\hypersetup{citecolor=DeepPink4}
+\begin{document}
+\title{\textbf{CS3410: Software Engineering Lab}
+\\
+\textbf{Multi disciplinary Q \& A Forum\\Problem Specification}}
+\author{ Aravind S CS11B033 \\
+		 S Akshayaram CS11B057\\
+		 R Srinivasan CS11B059\\
+		 S K Ramnanadan CS11B061\\
+		 Adit Krishnan  CS11B063\\
+[0.2in]
+}
+
+\maketitle
+
+We give the system specifications of an online platform for asking, answering questions and learning from peers. It is a network of students of the institute who can follow each other, add questions, topics and answers and respond to them by either up-voting or down-voting or by adding comments. They can also help other students by sharing some useful course materials like audio recordings of lectures, notes and other things which might help his/her batch mates in learning. 
+
+
+\section{User Authentication}
+\begin{itemize}
+\item For every user we maintain his/her first name, last name, his roll number which will be his/her user name, a password (which can be integrated with LDAP credentials).
+\item Apart from these, we also maintain a non-empty list of primary e-mail IDs which is stored for password recovery, and for sending updates and notifications to the user.
+\item Each user has a number of credits associated with the account which changes dynamically over time. It is a currency that describes his/her activity and success in the question-answer platform. The credits that a user has is a non-negative integer initialized to 100 when he/she creates an account.
+\item An user is allowed to add topics, questions and answers. User can also add comments to questions and answers. Users can up-vote or down-vote a particular answer or a comment. Users can follow other users. If user $A$ follows user $B$, then user $A$ is notified about the activities of $B$ in the forum which include answers for which $B$ has up-voted/down-voted, answers $B$ added, topics followed by $B$, questions followed by $B$. Users are allowed to follow particular topics or questions.
+\item Every user is also a member of a group consisting of students from his/her batch. In this group an user is allowed to add lecture notes, pointers to other helpful online resource materials, share audio recordings of lectures, or share voice-over for power point presentations and so on which might help other students of the batch in preparing for an exam. Every material that is added by a student is up-voted or down-voted by students of the same group regarding its relevance and utility. More the number of up-votes an user's material gets more credits is added to the user's account. 
+\item User can add questions and answer them anonymously. In that case, a question or an answer cannot be linked to a particular user.
+\end{itemize}
+
+
+\section{Questions}
+\begin{itemize}
+\item Questions are added by users. Each question is associated with text associated with the question, Date on which question was added, the user who added the question, unique question ID, a set of followers IDs, the topics to which the question belongs, and set of comments.
+\item When a user adds a question, the platform shows set of related questions (using the phrases used in the text) and asks the user whether his question is completely new.
+\item The user is also expected to give a non-empty set of topics to which the question is relevant to. Once the question is posted all the users who are following those topics are notified about the added question.
+\item Each question can be followed by a number of users. For every answer added to the question, all the users who are following the question are notified  about the answer.
+\end{itemize}
+ 
+
+\section{Answers}
+\begin{itemize}
+\item Answers are again added by users. An answer’s attributes consist of the text associated with it, the date on which it was added by the user, a unique AnswerID, user IDs who have up-voted, set of comments added to the answer.Every answer is a response to exactly one question.
+\item User ID's who have up-voted include the users who have up-voted the answer is a set of users who have viewed the answer and are endorsing it.
+\item For every answer that is added to a question, the asker and the followers of the question are notified about it.
+\item Every up-voted answer receives 10 credits which are added to the user's credits account. An answer which is up-voted by the user who asked the question received 50 credits.
+\end{itemize}
+  
+\section{Topics}
+\begin{itemize}
+\item The set of topics is initialized with Academics, Extra curricular activities (includes Tech-soc and Lit-Soc), Sports, Mess issues, Hostel issues.
+\item Users can create topics; every question must fall under at least one such topic.
+\item A topic has the following attributes: the name, set of users following the topic, a unique TopicID and the date on which a user added the topic.
+\item Once a question is added to the topic all the users who are following it are notified about it.
+
+\end{itemize} 
+
+\section{Study Materials}
+\begin{itemize}
+\item An user can upload media and documents (of limited size) which might help other students in preparing for an exam to the group which is dedicated to his batch.
+\item Each media which is uploaded is attributed with an unique ID, user who added it, set of users who have up-voted, date in which it was added, courses for which it is relevant to.
+\item When a media or a document file gets up-voted the user who added it gets notified. 
+\item Whenever a media file gets uploaded, all the users who are in the same batch are notified.
+
+\end{itemize}
+
+\section{Comments}
+\begin{itemize}
+\item The comment consists of the comment text, a unique CommentID, set of users who have up-voted or down-voted the comment.
+\item A comment that is posted under an answer is either a ‘parent’ comment or is a reply to some other comment under the same answer.
+\item Once a comment is added to the answer, the user who added the answer is notified about it.
+
+\end{itemize}
+\section{Crediting system}
+\begin{itemize}
+\item For every question which is added by the user, 10 credits is deducted from the user account.
+\item For every up-vote an answer receives 10 credits are added to the answerer's account. The system does not penalize the user for getting down-voted. If an answer gets up-voted, then the user who added the answer is notified about the user who has up-voted. 
+\item For every follower a question gets, 10 credits are added to the questioner's account. If a question gets followed by an user, the questioner is notified about it.
+\item If an answer is up-voted by the questioner then the 50 credits are added to the answer's account.
+\item If a media file which is uploaded by an user gets up-voted then the user who uploaded it gets 10 credits.
+\end{itemize}
+\end{document}
