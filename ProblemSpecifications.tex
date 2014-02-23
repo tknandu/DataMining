@@ -4,19 +4,19 @@
 \usepackage[colorlinks]{hyperref}
 \hypersetup{citecolor=DeepPink4}
 \begin{document}
-\title{\textbf{Analysis of Divide \& Conquer Techniques for \\Vertex Classification}}
+\title{\textbf{Analysis of Distributed Divide \& Conquer Techniques for \\Vertex Classification}}
 \author{ Gangal Varun CS11B038 \\
 		 S K Ramnanadan CS11B061\\
 [0.2in]
 }
-
+\date{}
 \maketitle
 \section*{Introduction}
 Traditionally, we have looked at classification algorithms to predict class labels for entities based on attributes of the entity alone. In real-world datasets, entities generally form a network and a lot of latent information is hidden in the interlinking of entities which can be used in the prediction of class labels. 
  
 
 
-\section*{Problem Overview}
+\section*{Overview}
 We are given a directed graph G=(V,E) with vertex set V and edge set E. Each vertex has set of attributes associated with it and belongs to one of the several classes. A common way of representing this is to associate a feature vector with every vertex. The task at hand is to assign a class label to unlabelled vertices in the graph. This problem is commonly known as the Vertex Classification Problem. 
 
 Since real-world datasets are huge, we look at distributed divide-and-conquer approaches to classify vertices of the graph. We aim to analyse speed-vs-quality of different divide and conquer approaches and attempt to devise an approach tailored to the problem of vertex classification . 
@@ -24,6 +24,8 @@ Since real-world datasets are huge, we look at distributed divide-and-conquer ap
 To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to ‘divide’ the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements(vertices which belong to more than one community) can play the role of mediators between different communities. 
 
 We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to ‘merge’ the results of the ‘divide’ and ‘conquer’ phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the ‘divide’ phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the ‘importance’ of a vertex in classification of its neighbours.
+
+During the conquer phase of the algorithm , we can use the feature vectors which are associated with each vertex for classification , in addition to the underlying graph structure.
 
 After having done a thorough analysis of approaches, we wish to develop novel strategies for the ‘divide’, ‘conquer’ and ‘merge’ phases tailored specifically for the problem of vertex classification.  
 
@@ -56,7 +58,22 @@ Image repositories are platforms where users can upload ,share and tag images.Ve
 It contains 105938 vertices and 2316948 edges.
 \end{itemize}  
 \section*{Evaluation of Outcome}
- 
+We have carefully chosen datasets which provide true class labels for the vertices of the graph. Since we are interested essentially in classification of vertices, we split the dataset into training and test datasets and compare the predicted class labels of the vertices in the test datasets against the true class labels.The F-measures are a commonly used family of measures used to determine the goodness of classification. Let us denote the set of vertices classified to the ith class as $S_i$ and the set of vertices truly belonging to the ith class as $C_i$ . In general,the $F_{\beta}$ measure is defined as follows:
+\begin{equation}
+F_{\beta}(S_{i}) = (1+{\beta^2}) \frac{precision(S_{i}).recall(S_{i})}{{\beta^2}.precision(S_{i})+recall(S_{i})}
+\end{equation}
+where $\beta$ is a non-negative real value and the precision and recall of $S_i$ are defined as follows:
+\begin{equation}
+precision({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ {C_{i}} } 
+\end{equation} 
+\begin{equation}
+recall({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ {S_{i}} } 
+\end{equation} 
+Then,the average $F_{\beta}$ measure is defined to be:-
+\begin{equation}
+\bar{F_{\beta}} = \frac{\sum_{\beta}{F_{\beta}}}{ \left|{S_{i}}\right| }
+\end{equation}
+Given a predicted class, precision indicates how many vertices are actually in the same class. Given a class, recall indicates how many vertices are predicted to be in the same class in a predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision.It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e.some vertices are not annotated to be a part of a class even though they actually belong to that class.This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
 
 \section*{References}
 \begin{itemize}
