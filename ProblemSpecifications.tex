@@ -19,13 +19,13 @@ We are given a directed graph $G=(V,E)$ with vertex set $V$ and edge set $E$. Ea
 
 Since real-world datasets are huge, we look at distributed divide-and-conquer approaches to classify vertices of the graph. We aim to analyse speed-vs-quality of different divide and conquer approaches and attempt to devise an approach tailored to the problem of vertex classification. 
 
-To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to ‘divide’ the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements (vertices which belong to more than one community) can play the role of mediators between different communities. 
+To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to {\it divide} the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements (vertices which belong to more than one community) can play the role of mediators between different communities. 
 
-We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to ‘merge’ the results of the ‘divide’ and ‘conquer’ phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the ‘divide’ phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the ‘importance’ of a vertex in the classification of its neighbours.
+We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to {\it merge} the results of the {\it divide} and {\it conquer} phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the {\it divide} phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the{\it importance} of a vertex in the classification of its neighbours.
 
 During the conquer phase of the algorithm, we can use the feature vectors which are associated with each vertex for classification, in addition to the underlying graph structure.
 
-After having done a thorough analysis of approaches, we wish to develop novel strategies for the ‘divide’, ‘conquer’ and ‘merge’ phases tailored specifically for the problem of vertex classification.  
+After having done a thorough analysis of approaches, we wish to develop novel strategies for the {\it divide, conquer} and {\it merge} phases tailored specifically for the problem of vertex classification.  
 
 \section*{Datasets}
 We plan to perform the experiments on the following real-world graphs. Of particular interest are labeled, directed and connected graphs.
@@ -34,7 +34,7 @@ We plan to perform the experiments on the following real-world graphs. Of partic
  In a citation network, vertices indicate research papers. An edge from one vertex to another indicates a citation of the former paper by the latter one.
 
 \begin{enumerate}
-\item In the following datasets, each vertex is attributed with a 0-1 word vector indicating the presence of the corresponding word from the dictionary. Our task is to classify each paper as belonging to a particular research area (such as Artificial Intelligence or Machine Learning). The set of research topics(class labels) is predetermined.
+\item \textbf{Document Classification:} In the following datasets, each vertex is attributed with a 0-1 word vector indicating the presence of the corresponding word from the dictionary. Our task is to classify each paper as belonging to a particular research area (such as Artificial Intelligence or Machine Learning). The set of research topics(class labels) is predetermined.
 \begin{enumerate}
 \item \textbf{CiteSeer}: The CiteSeer dataset consists of 3312 scientific publications classified into one of six classes. The citation network consists of 4732 links. The dictionary consists of 3703 unique words
 \item \textbf {Cora}: The Cora dataset consists of 2708 scientific publications classified into one of seven classes. The citation network consists of 5429 links. The dictionary consists of 1433 unique words. 
@@ -58,35 +58,39 @@ Image repositories are platforms where users can upload, share and tag images. V
 It contains 105938 vertices and 2316948 edges.
 \end{itemize}  
 \section*{Evaluation of Outcome}
-We have carefully chosen datasets which provide true class labels for the vertices of the graph. Since we are interested essentially in classification of vertices, we split the dataset into training and test datasets and compare the predicted class labels of the vertices in the test datasets against the true class labels.The F-measures are a commonly used family of measures used to determine the goodness of classification. Let us denote the set of vertices classified to the $i^{th}$ class as $S_i$ and the set of vertices truly belonging to the $i^{th}$ class as $C_i$ . In general,the $F_{\beta}$ measure is defined as follows:
+We have carefully chosen datasets which provide true class labels for the vertices of the graph. Since we are interested essentially in classification of vertices, we split the dataset into training and test datasets and compare the predicted class labels of the vertices in the test datasets against the true class labels.The F-measures are a commonly used family of measures used to determine the goodness of classification. Let us denote the set of class labels as $G$, the set of vertices classified to the $i^{th}$ class as $C_i$ and the set of vertices truly belonging to the $i^{th}$ class as $S_i$ . In general,the $F_{\beta}$ measure is defined as follows:
 \begin{equation}
-F_{\beta}(S_{i}) = (1+{\beta^2}) \frac{precision(S_{i}).recall(S_{i})}{{\beta^2}.precision(S_{i})+recall(S_{i})}
+F_{\beta}(i) = (1+{\beta^2}) \frac{precision(i).recall(i)}{{\beta^2}.precision(i)+recall(i)}
 \end{equation}
 where $\beta$ is a non-negative real value and the precision and recall of $S_i$ are defined as follows:
 \begin{equation}
-precision({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ \left|{C_{i}}\right| } 
+precision({i}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ \left|{C_{i}}\right| } 
 \end{equation} 
 \begin{equation}
-recall({S_{i}}) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ \left| {S_{i}} \right| } 
+recall(i) = \frac{ \left|{{C_{i}} \cap {S_{i}}}\right| }{ \left| {S_{i}} \right| } 
 \end{equation} 
 Then,the average $F_{\beta}$ measure is defined to be:-
 \begin{equation}
-\bar{F_{\beta}} = \frac{\sum_{\beta}{F_{\beta}}}{ \left|{S_{i}}\right| }
+\bar{F_{\beta}} = \frac{\sum_{i \in G}{F_{\beta}(i)}}{ \left|{G}\right| }
 \end{equation}
-Given a predicted class, precision indicates how many vertices are actually in that same class according to true class labels. Given a true class, recall indicates how many vertices are predicted to be in that same class according to our classification. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand, the F2 measure puts more emphasis on recall than precision. It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e., some vertices are not annotated to be a part of a class even though they actually belong to that class. This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
+Given a set of vertices predicted to be in a particular class, precision indicates how many of those vertices are truly in the same class. Given the set of vertices belonging truly to a particular class, recall indicates how many of those vertices are classified correctly. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand, the F2 measure puts more emphasis on recall than precision. It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e., some vertices are not annotated to be a part of a class even though they actually belong to that class. This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
+\\
+\\
+The F1 and F2 measures as explained above represent the quality of vertex classification. At the same time, since we are looking at distributed divide and conquer techniques, we will be looking at the time taken by different approaches empirically and devise metrics to sufficiently capture the tradeoff between speed and quality of the different approaches.
 
 \begin{thebibliography}{1}
-\bibitem{notes} Whang ,Gleich and Dhillon {\em ``Overlapping Community Detection
+\bibitem{notes} Whang, Gleich and Dhillon - {\em ``Overlapping Community Detection
 Using Seed Set Expansion''} 
 
-\bibitem{impj}  The Japan Reader {\em Imperial Japan 1800-1945} 1973:
-  Random House, N.Y.
+\bibitem{impj} S.Fortunato - {\em ``Community detection in Graphs''}
 
-\bibitem{norman} E. H. Norman {\em Japan's emergence as a modern
-  state} 1940: International Secretariat, Institute of Pacific
-  Relations.
+\bibitem{norman} Stanford Network Analysis Project - {\bf http://snap.stanford.edu/}
 
-\bibitem{fo} Bob Tadashi Wakabayashi {\em Anti-Foreignism and Western
-  Learning in Early-Modern Japan} 1986: Harvard University Press.
+\bibitem{fo} Zhou, Lei and Ye - {\em Large-Scale Dataset Clustering Based on MapReduce and Hadoop}
+
+\bibitem{fi} Rajaraman, Leskovec and Ullman - {\em Mining Massive Datsets}
+
+\bibitem{fw} Hastie, Tibshitani and Friedman- {\em The Elements of Statistical Learning} 
+  
 \end{thebibliography}
 \end{document}
