@@ -17,15 +17,15 @@ Traditionally, we have looked at classification algorithms to predict class labe
 
 
 \section*{Overview}
-We are given a directed graph $G=(V,E)$ with vertex set $V$ and edge set $E$. Each vertex has set of attributes associated with it and belongs to one of the several classes. A common way of representing this is to associate a feature vector with every vertex. The task at hand is to assign a class label to unlabelled vertices in the graph. This problem is commonly known as the Vertex Classification Problem. 
+We are given a directed graph $G=(V,E)$ with vertex set $V$ and edge set $E$. Each vertex has set of attributes associated with it and belongs to one of the several classes. A common way of representing this is to associate a feature vector with every vertex. The task at hand is to assign a class label to unlabeled vertices in the graph. This problem is commonly known as the Vertex Classification Problem. 
 
-Since real-world datasets are huge, we look at distributed divide-and-conquer approaches to classify vertices of the graph. We aim to analyse speed-vs-quality of different divide and conquer approaches and attempt to devise an approach tailored to the problem of vertex classification . 
+Since real-world datasets are huge, we look at distributed divide-and-conquer approaches to classify vertices of the graph. We aim to analyse speed-vs-quality of different divide and conquer approaches and attempt to devise an approach tailored to the problem of vertex classification. 
 
 To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to ‘divide’ the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements(vertices which belong to more than one community) can play the role of mediators between different communities. 
 
 We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to ‘merge’ the results of the ‘divide’ and ‘conquer’ phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the ‘divide’ phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the ‘importance’ of a vertex in the classification of its neighbours.
 
-During the conquer phase of the algorithm , we can use the feature vectors which are associated with each vertex for classification , in addition to the underlying graph structure.
+During the conquer phase of the algorithm, we can use the feature vectors which are associated with each vertex for classification, in addition to the underlying graph structure.
 
 After having done a thorough analysis of approaches, we wish to develop novel strategies for the ‘divide’, ‘conquer’ and ‘merge’ phases tailored specifically for the problem of vertex classification.  
 
@@ -35,30 +35,32 @@ We plan to perform the experiments on the following real-world graphs. Of partic
 \subsection*{Citation Networks}
  In a citation network, vertices indicate research papers. An edge from one vertex to another indicates a citation of the former paper by the latter one.
 
-In the following datasets, each vertex is attributed with a 0-1 word vector indicating the presence of the corresponding word from the dictionary.Our task is to classify each paper as belonging to a particular research area (such as Artificial Intelligence or Machine Learning). The set of research topics(class labels) is predetermined.
-\begin{itemize}
+\begin{enumerate}
+\item In the following datasets, each vertex is attributed with a 0-1 word vector indicating the presence of the corresponding word from the dictionary. Our task is to classify each paper as belonging to a particular research area (such as Artificial Intelligence or Machine Learning). The set of research topics(class labels) is predetermined.
+\begin{enumerate}
 \item \textbf{CiteSeer}: The CiteSeer dataset consists of 3312 scientific publications classified into one of six classes. The citation network consists of 4732 links. The dictionary consists of 3703 unique words
 \item \textbf {Cora}: The Cora dataset consists of 2708 scientific publications classified into one of seven classes. The citation network consists of 5429 links. The dictionary consists of 1433 unique words. 
 \item \textbf{WebKB}: The WebKB dataset consists of 877 scientific publications classified into one of five classes. The citation network consists of 1608 links. The dictionary consists of 1703 unique words.
+\end{enumerate}
 \item \textbf{NBER Patents}:The National Bureau of Economic Research provides a citation graph which includes all citations made by 3,923,922 patents granted between 1975 and 1999, totaling 16,522,438 citations. Each patent is classified into one of 987 classes. Each patent has a set of attributes associated with it such as state of author, measure of originality, etc.
 \item \textbf{cit-HepTh}:Arxiv HEP-TH (high energy physics theory) citation graph is from the e-print arXiv and covers all the citations within a dataset of 27,770 papers with 352,807 edges. Each vertex(paper) has an associated meta-information file describing it, which we will convert into a feature vector.
-\end{itemize}   
+\end{enumerate}   
 
 \subsection*{Social Networks}
-In the case of social networks,it is not so easy to come across labelled datasets.But based on the metadata associated with vertices and edges , we can annotate the vertices based on the domain of interest.For instance , using a user's employment information we can annotate whether the income group is low , medium or high.This can then be approached as a vertex classification problem as in the case of citation networks. 
+In the case of social networks, it is not so easy to come across labeled datasets but based on the metadata associated with vertices and edges , we can annotate the vertices based on the domain of interest. For instance, using a user's employment and salary information we can annotate whether the income group is low, medium or high.This can then be approached as a vertex classification problem as in the case of citation networks. 
 \begin{itemize}
 \item \textbf{Twitter}: This dataset consists of circles (or lists) from Twitter. Twitter data was crawled from public sources. The dataset includes node features, circles, and ego networks.It contains 81306 nodes and 1768149 edges.
 \item \textbf{Google Plus}: This dataset consists of circles from Google+. Google+ data was collected from users who had manually shared their circles using the 'share circle' feature. The dataset includes node features (profiles), circles, and ego networks.It contains 107614 nodes and 13673453 edges.
-\item \textbf{Flickr}: This dataset is built by forming links between images sharing common metadata from Flickr. Edges are formed between images from the same location, submitted to the same gallery, group, or set, images sharing common tags, images taken by friends, etc.
 \end{itemize}
+
 \subsection*{Image Repositories}
-Image repositories are platforms where users can upload ,share and tag images.Vertices represent images , and an edge represents various associations between them such as sharing the same tag,or having the same location.The task of image classification in this setting can be reduced to a vertex classification problem by annotating images based on the meta-data.For instance,we can annotate whether images are person or non-person images. 
+Image repositories are platforms where users can upload, share and tag images. Vertices represent images and an edge represents various associations between them such as sharing the same tag or having the same location. The task of image classification in this setting can be reduced to a vertex classification problem by annotating images based on the meta-data. For instance, we can annotate whether images are person or non-person images. 
 \begin{itemize}
 \item \textbf{Flickr}:This dataset is built by forming links between images sharing common metadata from Flickr. Edges are formed between images from the same location, submitted to the same gallery, group, or set, images sharing common tags, images taken by friends, etc.
 It contains 105938 vertices and 2316948 edges.
 \end{itemize}  
 \section*{Evaluation of Outcome}
-We have carefully chosen datasets which provide true class labels for the vertices of the graph. Since we are interested essentially in classification of vertices, we split the dataset into training and test datasets and compare the predicted class labels of the vertices in the test datasets against the true class labels.The F-measures are a commonly used family of measures used to determine the goodness of classification. Let us denote the set of vertices classified to the ith class as $S_i$ and the set of vertices truly belonging to the ith class as $C_i$ . In general,the $F_{\beta}$ measure is defined as follows:
+We have carefully chosen datasets which provide true class labels for the vertices of the graph. Since we are interested essentially in classification of vertices, we split the dataset into training and test datasets and compare the predicted class labels of the vertices in the test datasets against the true class labels.The F-measures are a commonly used family of measures used to determine the goodness of classification. Let us denote the set of vertices classified to the $i^{th}$ class as $S_i$ and the set of vertices truly belonging to the $i^{th}$ class as $C_i$ . In general,the $F_{\beta}$ measure is defined as follows:
 \begin{equation}
 F_{\beta}(S_{i}) = (1+{\beta^2}) \frac{precision(S_{i}).recall(S_{i})}{{\beta^2}.precision(S_{i})+recall(S_{i})}
 \end{equation}
@@ -73,8 +75,7 @@ Then,the average $F_{\beta}$ measure is defined to be:-
 \begin{equation}
 \bar{F_{\beta}} = \frac{\sum_{\beta}{F_{\beta}}}{ \left|{S_{i}}\right| }
 \end{equation}
-Given a predicted class, precision indicates how many vertices are actually in the same class. Given a class, recall indicates how many vertices are predicted to be in the same class as the predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision.It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e.some vertices are not annotated to be a part of a class even though they actually belong to that class.This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
-
+Given a predicted class, precision indicates how many vertices are actually in that same class. Given a class, recall indicates how many vertices are predicted to be in the same class as the predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision. It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e., some vertices are not annotated to be a part of a class even though they actually belong to that class. This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
 
 \begin{thebibliography}{1}
 \bibitem{notes} Whang ,Gleich and Dhillon {\em ``Overlapping Community Detection
