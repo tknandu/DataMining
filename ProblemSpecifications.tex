@@ -4,24 +4,22 @@
 \usepackage[colorlinks]{hyperref}
 \hypersetup{citecolor=DeepPink4}
 \begin{document}
-\title{\textbf{Analysis of Distributed Divide \& Conquer Techniques for \\Vertex Classification}}
+\title{\textbf{Distributed Divide \& Conquer Techniques for \\Vertex Classification}}
 \author{ Gangal Varun CS11B038 \\
-		 S K Ramnanadan CS11B061\\
+		 S.K.Ramnandan CS11B061\\
 [0.2in]
 }
 \date{}
 \maketitle
 \section*{Introduction}
 Traditionally, we have looked at classification algorithms to predict class labels for entities based on attributes of the entity alone. In real-world datasets, entities generally form a network and a lot of latent information is hidden in the interlinking of entities which can be used in the prediction of class labels. 
- 
 
-
-\section*{Overview}
+\section*{Problem Overview}
 We are given a directed graph $G=(V,E)$ with vertex set $V$ and edge set $E$. Each vertex has set of attributes associated with it and belongs to one of the several classes. A common way of representing this is to associate a feature vector with every vertex. The task at hand is to assign a class label to unlabeled vertices in the graph. This problem is commonly known as the Vertex Classification Problem. 
 
 Since real-world datasets are huge, we look at distributed divide-and-conquer approaches to classify vertices of the graph. We aim to analyse speed-vs-quality of different divide and conquer approaches and attempt to devise an approach tailored to the problem of vertex classification. 
 
-To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to ‘divide’ the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements(vertices which belong to more than one community) can play the role of mediators between different communities. 
+To better illustrate this, here is one of the problems we wish to study. A community (also referred to as a cluster) is a set of cohesive vertices that have more connections inside the set than outside. A common approach while analysing graphical models is to ‘divide’ the graph into communities. Since we are interested in the class label of a vertex, we allow the communities to be overlapping. The fringe elements (vertices which belong to more than one community) can play the role of mediators between different communities. 
 
 We would look to develop a distributed implementation of overlapping community detection and then, once the graph is divided into overlapping communities and classification is done within, we need to ‘merge’ the results of the ‘divide’ and ‘conquer’ phases, which is often the most difficult phase. Even a distributed implementation of overlapping community detection would be time-consuming and may not provide a dramatic improvement in quality of classification over a random partitioning of the graph in the ‘divide’ phase. This is an example of an approach we would be analyzing. We wish to employ and experiment techniques such as PageRank to determine the ‘importance’ of a vertex in the classification of its neighbours.
 
@@ -42,8 +40,8 @@ We plan to perform the experiments on the following real-world graphs. Of partic
 \item \textbf {Cora}: The Cora dataset consists of 2708 scientific publications classified into one of seven classes. The citation network consists of 5429 links. The dictionary consists of 1433 unique words. 
 \item \textbf{WebKB}: The WebKB dataset consists of 877 scientific publications classified into one of five classes. The citation network consists of 1608 links. The dictionary consists of 1703 unique words.
 \end{enumerate}
-\item \textbf{NBER Patents}:The National Bureau of Economic Research provides a citation graph which includes all citations made by 3,923,922 patents granted between 1975 and 1999, totaling 16,522,438 citations. Each patent is classified into one of 987 classes. Each patent has a set of attributes associated with it such as state of author, measure of originality, etc.
-\item \textbf{cit-HepTh}:Arxiv HEP-TH (high energy physics theory) citation graph is from the e-print arXiv and covers all the citations within a dataset of 27,770 papers with 352,807 edges. Each vertex(paper) has an associated meta-information file describing it, which we will convert into a feature vector.
+\item \textbf{NBER Patents}: The National Bureau of Economic Research provides a citation graph which includes all citations made by 3,923,922 patents granted between 1975 and 1999, totaling 16,522,438 citations. Each patent is classified into one of 987 classes. Each patent has a set of attributes associated with it such as state of author, measure of originality, etc.
+\item \textbf{cit-HepTh}: Arxiv HEP-TH (high energy physics theory) citation graph is from the e-print arXiv and covers all the citations within a dataset of 27,770 papers with 352,807 edges. Each vertex(paper) has an associated meta-information file describing it, which we will convert into a feature vector.
 \end{enumerate}   
 
 \subsection*{Social Networks}
@@ -75,7 +73,7 @@ Then,the average $F_{\beta}$ measure is defined to be:-
 \begin{equation}
 \bar{F_{\beta}} = \frac{\sum_{\beta}{F_{\beta}}}{ \left|{S_{i}}\right| }
 \end{equation}
-Given a predicted class, precision indicates how many vertices are actually in that same class. Given a class, recall indicates how many vertices are predicted to be in the same class as the predicted class. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand,the F2 measure puts more emphasis on recall than precision. It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e., some vertices are not annotated to be a part of a class even though they actually belong to that class. This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
+Given a predicted class, precision indicates how many vertices are actually in that same class according to true class labels. Given a true class, recall indicates how many vertices are predicted to be in that same class according to our classification. By definition, the precision and the recall are evenly weighted in F1 measure. On the other hand, the F2 measure puts more emphasis on recall than precision. It is important to quantify the recall in cases where the vertices in these datasets are partially annotated, i.e., some vertices are not annotated to be a part of a class even though they actually belong to that class. This indicates that it would be reasonable to weight recall higher than precision, which is done by the F2 measure.
 
 \begin{thebibliography}{1}
 \bibitem{notes} Whang ,Gleich and Dhillon {\em ``Overlapping Community Detection
