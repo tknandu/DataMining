@@ -34,14 +34,8 @@
   
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Abstract}
-Traditionally, we have looked at classification algorithms to predict class labels for entities based on attributes of the entity alone. In real-world datasets, entities generally form a network and a lot of latent information is hidden in the interlinking of entities which can be used in the prediction of class labels. 
-\section{The Four Stages}
-We shall in this section , try to come up with a general schematic framework in which a divide-and-conquer approach to vertex classification may be implemented.Initially, we are given a set of entities, only some of which are classified . Each entity may have attibutes , and may also be part of an initial graph structure.Atleast one of the above must be present, in order to have any meaningful classification. 
-\subsection {Preprocessing}
-\subsection {Divide}
-\subsection {Conquer}
-\subsection {Merge}
 
+The proliferation of the Internet has resulted in a rapid increase in the production of published information. This has led to the emergence of a large class of machine learning problems where the challenge has shifted from scarcity of data to lack of reliably labelled data. Such tasks are not amenable to inductive learning techniques. In these and many other situations, transductive learning is good alternative. The aim of this project is to design a mechanism for preprocessing the available labelled data using a suitable graphical representation of the dataset. The efficacy of different structural techniques in filtering useful labels is to be studied. Also, an attempt will be made to extend this system to enable active learning.  
 
 \section{Motivation}
 
